@@ -6,4 +6,6 @@ https://www.udemy.com/course/100-days-of-code
 My mini projects for each day:
 
 Day 01 Project: Band Name Generator
-Day 02 Project: Tip Calculator
+Day 02 Project: Big Tipper
+Day 03 Project: The Matrix Has You
+
