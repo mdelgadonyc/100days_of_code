@@ -1,3 +1,5 @@
+# Day 2 Project: Big Tipper
+
 print("Welcome to the tip calculator.")
 bill_total = float(input("What was the total bill? "))
 tip_rate = int(
