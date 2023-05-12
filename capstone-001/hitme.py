@@ -39,19 +39,18 @@ def final():
     print(f"Computer's final hand: {cpu_hand}")
 
     my_total = sum(my_hand)
-    print(my_total)
     cpu_total = sum(cpu_hand)
 
-    if my_total > 21:
-        print("You went over. You lose")
+    if my_total == 21:
+        print("Win with a Blackjack 😎")
+    elif my_total > 21:
+        print("You went over. You lose 😭")
     elif my_total == cpu_total:
-        print("Draw")
+        print("Draw 🙃")
     elif my_total > cpu_total:
         print("You win")
-
-    #determine winner and print
-    #print("You Win")
-    #print("You Lose")
+    else:
+        print("You lose")
 
 def draw():
     if not my_hand:            
@@ -62,27 +61,43 @@ def draw():
         cpu_hand.append(random.choice(cards))
     else:
         my_hand.append(random.choice(cards))
+        print(sum(my_hand))
         if sum(cpu_hand) < 17:
             cpu_hand.append(random.choice(cards))
 
     #print(f"Your cards: {my_hand}, current score: {sum(my_hand)}")
-    if sum(my_hand) > 21:
-        final()
+    if sum(cpu_hand) > 21:
+        if 11 in cpu_hand:
+            position = cpu_hand.index(11)
+            my_hand[position] = 1
 
+    if sum(my_hand) > 21:
+        if 11 in my_hand:
+            position = my_hand.index(11)
+            my_hand[position] = 1
+        else:
+            final()
+            return
+    elif sum(my_hand) == 21:
+        final()
+        return
+    
     print(f"Your cards: {my_hand}")
     print(f"Computer's first card: {cpu_hand[0]}")
-
-def begin():
-    print(logo)
-    
-    draw()
-    
     response = input("Type 'y' to get another card, type 'n' to pass: ")
     if response == 'y':
         draw()
     elif response == 'n':
         final()
+        return
 
+def begin():
+    print(logo)
+    
+    my_hand.clear()
+    cpu_hand.clear()
+
+    draw()
 
 # Loop as long as user wants to play a game
 while(1):
@@ -90,4 +105,5 @@ while(1):
 
     if response == 'y':
         begin()
-
+    elif response == 'n':
+        exit()
