@@ -11,11 +11,13 @@ def get_game_item():
     item = random.choice(data)
     return f'{item["name"]}, a {item["description"]}, from {item["country"]}', item["follower_count"]
 
+
 def who_has_more(a_followers, b_followers):
     if a_followers > b_followers:
         return 'A'
     else:
         return 'B'
+
 
 def win_round():
     global score
@@ -25,9 +27,11 @@ def win_round():
     print(logo)
     print(f"You're right! Current score: {score}.")
 
+
 def game_over():
     print(f"Sorry, that's wrong. Final score: {score}")
     exit()
+
 
 def start_game():
     print(logo)
