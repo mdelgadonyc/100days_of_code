@@ -41,6 +41,7 @@ def final():
     else:
         print("You lose")
 
+
 def draw():
     if not my_hand:
         # draw two cards for player
