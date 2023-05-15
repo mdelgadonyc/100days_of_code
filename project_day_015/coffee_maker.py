@@ -1,11 +1,54 @@
 # Day 15 Project: Coffee Machine
 
 BEVERAGE_MENU = ["espresso", "latte", "cappuccino"]
+ESPRESSO = {
+    "water": 1,
+    "milk": 1,
+    "coffee": 1,
+    "price": 0
+}
+
+LATTE = {
+    "water": 1,
+    "milk": 1,
+    "coffee": 1,
+    "price": 0
+}
+
+CAPPUCCINO = {
+    "water": 1,
+    "milk": 1,
+    "coffee": 1,
+    "price": 0
+}
+
+resources_level = {
+    "water": 0,
+    "milk": 0,
+    "coffee": 0,
+    "money": 0
+}
+
 machine_on = True
+
 
 def turn_machine_off():
     global machine_on
     machine_on = False
+
+
+# 3. Print report.
+# a. When the user enters “report” to the prompt, a report should be generated that shows
+# the current resource values. e.g.
+# Water: 100ml
+# Milk: 50ml
+# Coffee: 76g
+# Money: $2.5
+def generate_report():
+    print(f"water level: {resources_level['water']}ml")
+    print(f"milk level: {resources_level['milk']}ml")
+    print(f"coffee level: {resources_level['coffee']}g")
+    print(f"money available: ${resources_level['money']}")
 
 
 # 4. Check resources sufficient?
@@ -14,9 +57,43 @@ def turn_machine_off():
 # b. E.g. if Latte requires 200ml water but there is only 100ml left in the machine. It should
 # not continue to make the drink but print: “Sorry there is not enough water.”
 # c. The same should happen if another resource is depleted, e.g. milk or coffee.
-
 def check_resources(beverage):
-    pass
+    if beverage == "espresso":
+        if ESPRESSO["water"] > resources_level["water"]:
+            print("Sorry there is not enough water.")
+            return False
+        elif ESPRESSO["milk"] > resources_level["milk"]:
+            print("Sorry there is not enough milk.")
+            return False
+        elif ESPRESSO["coffee"] > resources_level["coffee"]:
+            print("Sorry there is not enough coffee.")
+            return False
+        else:
+            return True
+    elif beverage == "latte":
+        if LATTE["water"] > resources_level["water"]:
+            print("Sorry there is not enough water.")
+            return False
+        elif LATTE["milk"] > resources_level["milk"]:
+            print("Sorry there is not enough milk.")
+            return False
+        elif LATTE["coffee"] > resources_level["coffee"]:
+            print("Sorry there is not enough coffee.")
+            return False
+        else:
+            return True
+    elif beverage == "cappuccino":
+        if CAPPUCCINO["water"] > resources_level["water"]:
+            print("Sorry there is not enough water.")
+            return False
+        elif CAPPUCCINO["milk"] > resources_level["milk"]:
+            print("Sorry there is not enough milk.")
+            return False
+        elif CAPPUCCINO["coffee"] > resources_level["coffee"]:
+            print("Sorry there is not enough coffee.")
+            return False
+        else:
+            return True
 
 
 def request_payment():
@@ -35,11 +112,12 @@ def start_machine():
         # TODO 2. Turn off the Coffee Machine by entering “off” to the prompt.
         elif coffee_choice == "off":
             turn_machine_off()
-
-
+        elif coffee_choice == "report":
+            generate_report()
 
 # a. Check the user’s input to decide what to do next.
-# b. The prompt should show every time action has completed, e.g. once the drink is dispensed. The prompt should show again to serve the next customer.
+# b. The prompt should show every time action has completed, e.g. once the drink is dispensed.
+# The prompt should show again to serve the next customer.
 
 
 start_machine()
@@ -47,13 +125,7 @@ start_machine()
 
 """
 Coffee Machine Program Requirements
-3. Print report.
-a. When the user enters “report” to the prompt, a report should be generated that shows
-the current resource values. e.g.
-Water: 100ml
-Milk: 50ml
-Coffee: 76g
-Money: $2.5
+
 4. Check resources sufficient?
 a. When the user chooses a drink, the program should check if there are enough
 resources to make that drink.
