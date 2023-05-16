@@ -42,7 +42,6 @@ def generate_report():
     print(f"money available: ${resources_level['money']:.2f}")
 
 
-# 4. Check resources sufficient?
 def check_resources(beverage):
     if BEVERAGE_MENU[beverage]["water"] > resources_level["water"]:
         print("Sorry there is not enough water.")
@@ -70,7 +69,10 @@ def request_payment():
 def serve_beverage(coffee_choice):
     resources_level['money'] += BEVERAGE_MENU[coffee_choice]["price"]
 
-    # TODO 7. Make Coffee.
+    resources_level["water"] -= BEVERAGE_MENU[coffee_choice]["water"]
+    resources_level["milk"] -= BEVERAGE_MENU[coffee_choice]["milk"]
+    resources_level["coffee"] -= BEVERAGE_MENU[coffee_choice]["coffee"]
+
     # a. If the transaction is successful and there are enough resources to make the drink the
     # user selected, then the ingredients to make the drink should be deducted from the
     # coffee machine resources.
