@@ -14,3 +14,9 @@ My mini projects for each day:
 * Day 09 Project: Silent Bid Auction
 * Day 10 Project: Calculated fun!
 * Day 11 Project: [Capstone] Blackjack: Hit me!
+* Day 12 Project: You Guessed It!
+* Day 14 Project: Higher, Lower Game 
+* Day 15 Project: Coffee Machine 
+* Day 16 Project: OOP-type Coffee Machine
+
+
