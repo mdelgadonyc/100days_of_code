@@ -1,31 +1,29 @@
 # Day 15 Project: Coffee Machine
 
-BEVERAGE_MENU = ["espresso", "latte", "cappuccino"]
-ESPRESSO = {
-    "water": 1,
-    "milk": 1,
-    "coffee": 1,
-    "price": 0
-}
-
-LATTE = {
-    "water": 1,
-    "milk": 1,
-    "coffee": 1,
-    "price": 0
-}
-
-CAPPUCCINO = {
-    "water": 1,
-    "milk": 1,
-    "coffee": 1,
-    "price": 0
-}
+BEVERAGE_MENU = {
+    "espresso": {
+        "water": 50,
+        "milk": 0,
+        "coffee": 18,
+        "price": 1.50
+    },
+    "latte": {
+        "water": 200,
+        "milk": 150,
+        "coffee": 24,
+        "price": 2.50
+    },
+    "cappuccino": {
+        "water": 250,
+        "milk": 100,
+        "coffee": 24,
+        "price": 3.00
+    }}
 
 resources_level = {
-    "water": 0,
-    "milk": 0,
-    "coffee": 0,
+    "water": 300,
+    "milk": 200,
+    "coffee": 100,
     "money": 0
 }
 
@@ -48,7 +46,7 @@ def generate_report():
     print(f"water level: {resources_level['water']}ml")
     print(f"milk level: {resources_level['milk']}ml")
     print(f"coffee level: {resources_level['coffee']}g")
-    print(f"money available: ${resources_level['money']}")
+    print(f"money available: ${resources_level['money']:.2f}")
 
 
 # 4. Check resources sufficient?
@@ -58,46 +56,32 @@ def generate_report():
 # not continue to make the drink but print: “Sorry there is not enough water.”
 # c. The same should happen if another resource is depleted, e.g. milk or coffee.
 def check_resources(beverage):
-    if beverage == "espresso":
-        if ESPRESSO["water"] > resources_level["water"]:
-            print("Sorry there is not enough water.")
-            return False
-        elif ESPRESSO["milk"] > resources_level["milk"]:
-            print("Sorry there is not enough milk.")
-            return False
-        elif ESPRESSO["coffee"] > resources_level["coffee"]:
-            print("Sorry there is not enough coffee.")
-            return False
-        else:
-            return True
-    elif beverage == "latte":
-        if LATTE["water"] > resources_level["water"]:
-            print("Sorry there is not enough water.")
-            return False
-        elif LATTE["milk"] > resources_level["milk"]:
-            print("Sorry there is not enough milk.")
-            return False
-        elif LATTE["coffee"] > resources_level["coffee"]:
-            print("Sorry there is not enough coffee.")
-            return False
-        else:
-            return True
-    elif beverage == "cappuccino":
-        if CAPPUCCINO["water"] > resources_level["water"]:
-            print("Sorry there is not enough water.")
-            return False
-        elif CAPPUCCINO["milk"] > resources_level["milk"]:
-            print("Sorry there is not enough milk.")
-            return False
-        elif CAPPUCCINO["coffee"] > resources_level["coffee"]:
-            print("Sorry there is not enough coffee.")
-            return False
-        else:
-            return True
+    if BEVERAGE_MENU[beverage]["water"] > resources_level["water"]:
+        print("Sorry there is not enough water.")
+        return False
+    elif BEVERAGE_MENU[beverage]["milk"] > resources_level["milk"]:
+        print("Sorry there is not enough milk.")
+        return False
+    elif BEVERAGE_MENU[beverage]["coffee"] > resources_level["coffee"]:
+        print("Sorry there is not enough coffee.")
+        return False
+    else:
+        return True
 
 
 def request_payment():
-    pass
+    print("Please insert coins.")
+    quarters = int(input("How many quarters?: "))
+    dimes = int(input("How many dimes?: "))
+    nickles = int(input("How many nickles?: "))
+    pennies = int(input("How many pennies: "))
+    total = round(0.25 * quarters + 0.10 * dimes + .05 * nickles + .01 * pennies, 2)
+    return total
+
+
+def serve_beverage(coffee_choice):
+    resources_level['money'] += BEVERAGE_MENU[coffee_choice]["price"]
+    print(f"Here is your latte 🍵 Enjoy!")
 
 
 def start_machine():
@@ -108,7 +92,15 @@ def start_machine():
         coffee_choice = input("What would you like? (espresso/latte/cappuccino): ")
         if coffee_choice in BEVERAGE_MENU:
             if check_resources(coffee_choice):
-                request_payment()
+                inserted = request_payment()
+                if inserted > BEVERAGE_MENU[coffee_choice]['price']:
+                    print(f"Your change is: ${inserted - BEVERAGE_MENU[coffee_choice]['price']:.2f}")
+                    serve_beverage(coffee_choice)
+                elif inserted == BEVERAGE_MENU[coffee_choice]['price']:
+                    serve_beverage(coffee_choice)
+                else:
+                    print(f"Sorry that's not enough money. Money refunded.")
+
         # TODO 2. Turn off the Coffee Machine by entering “off” to the prompt.
         elif coffee_choice == "off":
             turn_machine_off()
