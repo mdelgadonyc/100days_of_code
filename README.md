@@ -19,6 +19,6 @@ My mini projects for each day:
 * Day 15 Project: Coffee Machine 
 * Day 16 Project: OOP-type Coffee Machine
 * Day 17 Project: Quiz Master
-
+* Day 18 Project: Magnifique!
 
 
