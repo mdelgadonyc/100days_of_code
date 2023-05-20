@@ -20,5 +20,4 @@ My mini projects for each day:
 * Day 16 Project: OOP-type Coffee Machine
 * Day 17 Project: Quiz Master
 * Day 18 Project: Magnifique!
-
-
+* Day 19 Project: Ready, Set, Turtle Power!
