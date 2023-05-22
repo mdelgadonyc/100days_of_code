@@ -15,6 +15,7 @@ class Snake:
     def create_snake(self):
         for index in range(3):
             square = Turtle(shape="square")
+            square.speed("fastest")
             square.penup()
             square.setpos(-(index*20), 0)
             square.color("white")
