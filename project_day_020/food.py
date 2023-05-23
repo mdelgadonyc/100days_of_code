@@ -1,6 +1,7 @@
 from turtle import Turtle
 import random
 
+
 class Food(Turtle):
     def __init__(self):
         super().__init__()
@@ -12,11 +13,11 @@ class Food(Turtle):
 
         self.refresh()
 
-
     def refresh(self):
         # random x and y coordinates
         x_pos = random.randint(-280, 280)
         y_pos = random.randint(-280, 280)
+        print(f"food is at: {x_pos} and {y_pos} ")
         self.goto(x_pos, y_pos)
 
 
