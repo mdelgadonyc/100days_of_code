@@ -21,3 +21,4 @@ My mini projects for each day:
 * Day 17 Project: Quiz Master
 * Day 18 Project: Magnifique!
 * Day 19 Project: Ready, Set, Turtle Power!
+* Day 20 Project: Cobra Kai
