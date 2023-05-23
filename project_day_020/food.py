@@ -17,7 +17,4 @@ class Food(Turtle):
         # random x and y coordinates
         x_pos = random.randint(-280, 280)
         y_pos = random.randint(-280, 280)
-        print(f"food is at: {x_pos} and {y_pos} ")
         self.goto(x_pos, y_pos)
-
-

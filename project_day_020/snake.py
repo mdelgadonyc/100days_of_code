@@ -1,4 +1,5 @@
 from turtle import Turtle
+STARTING_POSITION = [(0, 0), (-20, 0), (-40, 0)]
 MOVE_DISTANCE = 20
 UP = 90
 DOWN = 270
@@ -14,12 +15,18 @@ class Snake:
 
     def create_snake(self):
         for index in range(3):
-            square = Turtle(shape="square")
-            square.speed("fastest")
-            square.penup()
-            square.setpos(-(index*20), 0)
-            square.color("white")
-            self.kai.append(square)
+            self.add_segment(STARTING_POSITION[index])
+
+    def add_segment(self, position):
+        square = Turtle(shape="square")
+        square.speed("fastest")
+        square.penup()
+        square.setpos(position)
+        square.color("white")
+        self.kai.append(square)
+
+    def extend(self):
+        self.add_segment(self.kai[-1].position())
 
     def move(self):
         # interlink the segments so that each one tracks the one in front
