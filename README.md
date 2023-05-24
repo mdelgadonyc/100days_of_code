@@ -22,3 +22,4 @@ My mini projects for each day:
 * Day 18 Project: Magnifique!
 * Day 19 Project: Ready, Set, Turtle Power!
 * Day 20 Project: Cobra Kai
+* Day 21 Project: Pong-head
