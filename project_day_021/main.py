@@ -1,46 +1,40 @@
 # Day 21 Project: Pong-head
 
-from turtle import Turtle, Screen
+from turtle import Screen
+from paddle import Paddle
 
-P1_START = (350, 0)
+R_PADDLE_START = (350, 0)
+L_PADDLE_START = (-350, 0)
 
-#TODO: Create the screen
+# Create the screen
 screen = Screen()
 screen.title("Welcome to Pong Land!")
 screen.setup(width=800, height=600)
 screen.bgcolor("black")
-
-#TODO: Create and move a paddle
-paddle_1 = Turtle()
-paddle_1.penup()
-paddle_1.goto(P1_START)
-paddle_1.color("white")
-paddle_1.shape("square")
-paddle_1.shapesize(stretch_len=1, stretch_wid=5)
+screen.tracer(0)
 
 
+r_paddle = Paddle(R_PADDLE_START)
+l_paddle = Paddle(L_PADDLE_START)
 
-def move_up():
-    y_coor = paddle_1.ycor()
-    y_coor += 20
-    paddle_1.goto(x=350, y=y_coor)
+screen.onkey(r_paddle.move_up, "Up")
+screen.onkey(r_paddle.move_down, "Down")
 
-
-def move_down():
-    y_coor = paddle_1.ycor()
-    y_coor -= 20
-    paddle_1.goto(x=350, y=y_coor)
+screen.onkey(l_paddle.move_up, "w")
+screen.onkey(l_paddle.move_down, "s")
 
 
-screen.onkey(move_up,"Up")
-screen.onkey(move_down,"Down")
 screen.listen()
 
-#TODO: Create another paddle
-#TODO: Create the ball and make it move
-#TODO: Detect collisions with wall and bounce
-#TODO: Detect collision with paddle
-#TODO: Detect when paddle misses
-#TODO: Keep score
+game_is_on = True
+while game_is_on:
+    screen.update()
+
+
+# TODO: Create the ball and make it move
+# TODO: Detect collisions with wall and bounce
+# TODO: Detect collision with paddle
+# TODO: Detect when paddle misses
+# TODO: Keep score
 
 screen.exitonclick()
