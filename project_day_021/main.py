@@ -38,7 +38,7 @@ while game_is_on:
     ball.move()
 
     # TODO: Detect collisions with wall and bounce
-    if ball.ycor() >= 300:
+    if ball.ycor() >= 280 or ball.ycor() <= -280:
         ball.bounce()
 
 
