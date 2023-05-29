@@ -1,8 +1,9 @@
 # Day 21 Project: Pong-head
 
-from turtle import Screen, Turtle
+from turtle import Screen
 from paddle import Paddle
 from ball import Ball
+from scoreboard import Scoreboard
 import time
 
 R_PADDLE_START = (350, 0)
@@ -26,6 +27,7 @@ screen.onkey(l_paddle.move_up, "w")
 screen.onkey(l_paddle.move_down, "s")
 
 ball = Ball(BALL_START)
+scoreboard = Scoreboard()
 
 # Get ball to automatically move to top right of screen as soon as game begins
 
@@ -33,7 +35,7 @@ screen.listen()
 
 game_is_on = True
 while game_is_on:
-    time.sleep(0.1)
+    time.sleep(ball.speed_rate)
     screen.update()
     ball.move()
 
@@ -48,9 +50,11 @@ while game_is_on:
     # Detect when either right or left paddle misses
     if ball.xcor() > 380:
         ball.restart()
+        scoreboard.l_point()
 
     if ball.xcor() < -380:
         ball.restart()
+        scoreboard.r_point()
 
 # TODO: Keep score
 
