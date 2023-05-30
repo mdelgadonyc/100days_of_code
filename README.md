@@ -23,3 +23,4 @@ My mini projects for each day:
 * Day 19 Project: Ready, Set, Turtle Power!
 * Day 20 Project: Cobra Kai
 * Day 21 Project: Pong-head
+* Day 23 Project: [Capstone] Turtle Crossing
