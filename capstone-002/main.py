@@ -32,16 +32,12 @@ car_manager.new_car()
 #  centre.
 
 game_is_on = True
-count = 1
 
 while game_is_on:
     time.sleep(0.1)
-    if count % 6 == 0:
-        car_manager.new_car()
-    count += 1
-
+    car_manager.new_car()
     car_manager.move_cars()
-    
+
     screen.update()
 
 screen.exitonclick()
