@@ -10,6 +10,7 @@ class CarManager:
 
     def __init__(self):
         self.cars = []
+        self.speed = STARTING_MOVE_DISTANCE
 
     def new_car(self):
         # Create cars that are 20px high by 40px wide that are randomly generated along the y-axis. No cars should
@@ -29,5 +30,7 @@ class CarManager:
     def move_cars(self):
         # Move existing cars to the left of the screen
         for car in self.cars:
-            car.backward(STARTING_MOVE_DISTANCE)
+            car.backward(self.speed)
 
+    def speedup(self):
+        self.speed += MOVE_INCREMENT
