@@ -36,6 +36,13 @@ class Snake:
             self.kai[seg_num].setpos(new_x, new_y)
         self.head.forward(MOVE_DISTANCE)
 
+    def reset(self):
+        for segment in self.kai:
+            segment.goto(1000,1000)
+        self.kai.clear()
+        self.create_snake()
+        self.head = self.kai[0]
+
     def up(self):
         if self.head.heading() != DOWN:
             self.head.setheading(UP)
