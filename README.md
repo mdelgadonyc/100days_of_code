@@ -25,3 +25,4 @@ My mini projects for each day:
 * Day 21 Project: Pong-head
 * Day 23 Project: [Capstone] Turtle Crossing
 * Day 24 Project: Mail Merge Challenge
+* Day 25 Project: States Game
