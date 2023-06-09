@@ -27,3 +27,4 @@ My mini projects for each day:
 * Day 24 Project: Mail Merge Challenge
 * Day 25 Project: States Game
 * Day 26 Project: Papa-Yankee-Tango-Hotel-Oscar-November!
+* Day 27 Project: Distance Converter GUI
