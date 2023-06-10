@@ -28,3 +28,4 @@ My mini projects for each day:
 * Day 25 Project: States Game
 * Day 26 Project: Papa-Yankee-Tango-Hotel-Oscar-November!
 * Day 27 Project: Distance Converter GUI
+* Day 28 Project: Pomodoro Timer
