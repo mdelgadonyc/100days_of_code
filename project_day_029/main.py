@@ -1,5 +1,5 @@
 # Day 29 Project: Password Manager
-
+import json
 import random
 import tkinter
 from tkinter import messagebox
@@ -46,18 +46,30 @@ def save():
         is_ok = messagebox.askokcancel(title=website, message=f"These are the details entered: \nEmail: {email}\n"
                                                               f"Password: {password}\nWould you like to save?")
 
-        # All fields need to be cleared after Add button is pressed.
-        website_box.delete(0, 'end')
-        user_box.delete(0, 'end')
-        user_box.insert(0, "user@email.com")
-        password_box.delete(0, 'end')
-        website_box.focus()
-
         if is_ok:
-            # Write the data inside the entries to a data.txt file when the Add button is clicked.
-            with open("data.txt", "a") as file:
-                # Each website, email, and password combination should be on a new file line side the file.
-                file.write(f"{website} | {email} | {password}\n")
+            new_data = {
+                website: {
+                    "email": email,
+                    "password": password
+                }
+            }
+            try:
+                with open("data.json", "r") as file:
+                    data = json.load(file)
+            except FileNotFoundError:
+                with open("data.json", "w") as file:
+                    json.dump(new_data, file)
+            else:
+                with open("data.json", "w") as file:
+                    data.update(new_data)
+                    json.dump(data, file, indent=4)
+            finally:
+                # All fields need to be cleared after Add button is pressed.
+                website_box.delete(0, 'end')
+                user_box.delete(0, 'end')
+                user_box.insert(0, "user@email.com")
+                password_box.delete(0, 'end')
+                website_box.focus()
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -85,7 +97,7 @@ website_box.grid(column=1, row=1, columnspan=2, sticky="EW")
 website_box.focus()
 
 user_box.grid(column=1, row=2, columnspan=2, sticky="EW")
-user_box.insert(0, "mdelgadonyc@gmail.com")
+user_box.insert(0, "user@email.com")
 
 password_box.grid(column=1, row=3, sticky="EW")
 
