@@ -5,7 +5,7 @@ import tkinter
 from tkinter import messagebox
 import pyperclip
 
-
+FILENAME = "data.json"
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 # Password Generator Project
 def generate_function():
@@ -54,13 +54,13 @@ def save():
                 }
             }
             try:
-                with open("data.json", "r") as file:
+                with open(FILENAME, "r") as file:
                     data = json.load(file)
             except FileNotFoundError:
-                with open("data.json", "w") as file:
+                with open(FILENAME, "w") as file:
                     json.dump(new_data, file)
             else:
-                with open("data.json", "w") as file:
+                with open(FILENAME, "w") as file:
                     data.update(new_data)
                     json.dump(data, file, indent=4)
             finally:
@@ -70,6 +70,24 @@ def save():
                 user_box.insert(0, "user@email.com")
                 password_box.delete(0, 'end')
                 website_box.focus()
+
+
+# ---------------------------- FIND PASSWORD ------------------------------- #
+def find_password():
+    website = website_box.get()
+    try:
+        with open(FILENAME, "r") as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        messagebox.showerror(title="Error", message="No Data File Found.")
+    else:
+        if website in data:
+            password = data[website]["password"]
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=website, message=f"Email: {email}\nPassword: {password}")
+        else:
+            messagebox.showerror(title="Error", message="No details for the website exists.")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -89,11 +107,11 @@ user_label.grid(row=2, column=0)
 password_label = tkinter.Label(text="Password:")
 password_label.grid(row=3, column=0)
 
-website_box = tkinter.Entry(width=35)
+website_box = tkinter.Entry(width=21)
 user_box = tkinter.Entry(width=35)
 password_box = tkinter.Entry(width=21)
 
-website_box.grid(column=1, row=1, columnspan=2, sticky="EW")
+website_box.grid(column=1, row=1, sticky="EW")
 website_box.focus()
 
 user_box.grid(column=1, row=2, columnspan=2, sticky="EW")
@@ -101,9 +119,11 @@ user_box.insert(0, "user@email.com")
 
 password_box.grid(column=1, row=3, sticky="EW")
 
+search_button = tkinter.Button(text="Search", command=find_password)
 generate_button = tkinter.Button(text="Generate Password", command=generate_function)
 add_button = tkinter.Button(text="Add", width=36, command=save)
 
+search_button.grid(column=2, row=1, sticky="EW")
 generate_button.grid(column=2, row=3, sticky="EW")
 add_button.grid(column=1, row=4, columnspan=2, sticky="EW")
 # add_button.bind("<Button-1>", save)
