@@ -71,18 +71,17 @@ if percentage > 0.002:
     # TODO 7. - Use Python slice operator to create a list that contains the first 3 articles. Hint: https://stackoverflow.com/questions/509211/understanding-slice-notation
 
     three_articles = data['articles'][0:3]
-    for article in three_articles:
-        print(article['title'])
-        print(article['description'])
-        print("\n")
 
 
 ## STEP 3: Use twilio.com/docs/sms/quickstart/python
 # to send a separate message with each article's title and description to your phone number.
 
 # TODO 8. - Create a new list of the first 3 article's headline and description using list comprehension.
+    article_list = [(article['title'], article['description']) for article in three_articles]
 
 # TODO 9. - Send each article as a separate message via Twilio.
+    for article in article_list:
+        print(article)
 
 
 # Optional TODO: Format the message like this:
