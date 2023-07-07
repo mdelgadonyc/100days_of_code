@@ -5,8 +5,8 @@ import os
 import requests
 import datetime
 
-STOCK_NAME = "VOO"
-COMPANY_NAME = "Vanguard 500 Index Fund ETF"
+STOCK_NAME = "AAPL"
+COMPANY_NAME = "Apple"
 
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
@@ -50,17 +50,31 @@ percentage = price_difference / yesterday_stock_price
 print(f"Stock price percentage difference is {(percentage * 100):.2f}%")
 
 # TODO 5. - If TODO4 percentage is greater than 5 then print("Get News").
-if percentage > 5:
-    print("Get News")
-    ## STEP 2: https://newsapi.org/ 
-    # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
-
+## STEP 2: https://newsapi.org/
+# Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME.
 # TODO 6. - Instead of printing ("Get News"), use the News API to get articles related to the COMPANY_NAME.
-# All articles about Tesla from the last month, sorted by recent first
-# GET
-# https://newsapi.org/v2/everything?q=tesla&from=2023-06-06&sortBy=publishedAt&apiKey=API_KEY
 
-# TODO 7. - Use Python slice operator to create a list that contains the first 3 articles. Hint: https://stackoverflow.com/questions/509211/understanding-slice-notation
+if percentage > 0.002:
+    print("Get News\n===============\n")
+    parameters = {
+        "q": COMPANY_NAME,
+        #"pageSize": 3,
+        "sortBy": "publishedAt",
+        "searchIn": "title",
+        "language": "en",
+        "apiKey": os.environ["NEWS_APIKEY"]
+    }
+    response = requests.get(NEWS_ENDPOINT, params=parameters)
+    response.raise_for_status()
+    data = response.json()
+
+    # TODO 7. - Use Python slice operator to create a list that contains the first 3 articles. Hint: https://stackoverflow.com/questions/509211/understanding-slice-notation
+
+    three_articles = data['articles'][0:3]
+    for article in three_articles:
+        print(article['title'])
+        print(article['description'])
+        print("\n")
 
 
 ## STEP 3: Use twilio.com/docs/sms/quickstart/python
