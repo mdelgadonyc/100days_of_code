@@ -33,3 +33,4 @@ My mini projects for each day:
 * Day 31 Project: [Capstone] Flashy!
 * Day 34 Project: Quiz Master 2.0
 * DAY 35 Project: Rain Check!
+* DAY 36 Project: Ticker Tracker
