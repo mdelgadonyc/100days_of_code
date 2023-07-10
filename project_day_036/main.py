@@ -1,9 +1,9 @@
 # DAY 36 Project: Ticker Tracker
 
 import os
-
 import requests
 import datetime
+import twilio.rest
 
 STOCK_NAME = "AAPL"
 COMPANY_NAME = "Apple"
@@ -28,7 +28,7 @@ response.raise_for_status()
 data = response.json()
 
 # today_date = str(datetime.datetime.now()).split(" ")[0]
-today_date = str(datetime.datetime.today() - datetime.timedelta(days=1)).split(" ")[0]
+today_date = str(datetime.datetime.today() - datetime.timedelta(days=3)).split(" ")[0]
 
 today_stock_data = data['Time Series (Daily)'][today_date]
 today_stock_price = float(today_stock_data['4. close'])
@@ -36,7 +36,7 @@ print(today_stock_price)
 
 # TODO 2. - Get the day before yesterday's closing stock price
 # yesterday_date = str(datetime.datetime.today() - datetime.timedelta(days=1)).split(" ")[0]
-yesterday_date = str(datetime.datetime.today() - datetime.timedelta(days=2)).split(" ")[0]
+yesterday_date = str(datetime.datetime.today() - datetime.timedelta(days=4)).split(" ")[0]
 yesterday_stock_data = data['Time Series (Daily)'][yesterday_date]
 yesterday_stock_price = float(yesterday_stock_data['4. close'])
 print(yesterday_stock_price)
@@ -80,6 +80,19 @@ if percentage > 0.002:
     article_list = [(article['title'], article['description']) for article in three_articles]
 
 # TODO 9. - Send each article as a separate message via Twilio.
+
+    twilio_acct_id = os.environ['TWILIO_ACCT_ID']
+    twilio_auth_token = os.environ['TWILIO_AUTH_KEY']
+    client = twilio.rest.Client(twilio_acct_id, twilio_auth_token)
+
+    article = "Test message"
+
+    message = client.messages.create(
+        from_=os.environ['TWILIO_NUMBER'],
+        body='article',
+        to=os.environ['MY_SMS_NUMBER']
+    )
+
     for article in article_list:
         print(article)
 
