@@ -1,0 +1,14 @@
+name: Print Commit Message
+
+on:
+  push:
+    branches:
+      - main  # Adjust this branch name as per your needs
+
+jobs:
+  print-message:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print commit message
+        run: echo "New commit pushed!"

@@ -35,3 +35,4 @@ My mini projects for each day:
 * DAY 35 Project: Rain Check!
 * DAY 36 Project: Ticker Tracker
 * DAY 37 Project: Habitual
+* DAY 38 Project: FitTrack
