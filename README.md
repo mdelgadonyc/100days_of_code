@@ -36,3 +36,4 @@ My mini projects for each day:
 * DAY 36 Project: Ticker Tracker
 * DAY 37 Project: Habitual
 * DAY 38 Project: FitTrack
+* DAY 39 Project: [Capstone] Take Flight!
