@@ -2,21 +2,22 @@ import os
 
 import requests
 import os
+import flight_data
 
 FLIGHT_ENDPOINT = "https://api.tequila.kiwi.com"
 FLIGHT_APIKEY = os.environ.get('ENV_FLIGHT_APIKEY')
 
-class FlightSearch:
-    #This class is responsible for talking to the Flight Search API.
 
-    def get_flight(code):
+class FlightSearch:
+    # This class is responsible for talking to the Flight Search API.
+
+    def get_flight(self, code):
         """
         Retrieve cheapest flight for the given city from NYC within the next 6 months.
 
         Returns:
-            ??? as a string
+            FlightData manager object
         """
-
 
         parameters = {
             "fly_from": "NYC",
@@ -38,9 +39,10 @@ class FlightSearch:
 
         data = response.json()
         data = data['data'][0]
-        price = f"${data['price']}"
-        print(price)
 
+        flight_manager = flight_data.FlightData()
+        flight_manager.set_data(data)
+        return flight_manager
 
     def get_code(city_name):
         """
@@ -58,7 +60,7 @@ class FlightSearch:
             "apikey": FLIGHT_APIKEY
         }
 
-        location_endpoint_url = FLIGHT_ENDPOINT+"/locations/query"
+        location_endpoint_url = FLIGHT_ENDPOINT + "/locations/query"
 
         response = requests.get(url=location_endpoint_url, params=parameters, headers=headers)
         response.raise_for_status()
