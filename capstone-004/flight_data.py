@@ -11,7 +11,7 @@ class FlightData:
         self.link = data['deep_link']
         self.price = data['price']
         self.departure_code = data['flyFrom']
-        self.destination_code = data['flyTo']
+        self.destination_code = data['flyHome']
         self.date = data['local_departure']
 
     def get_price(self):
