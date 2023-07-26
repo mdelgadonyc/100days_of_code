@@ -11,9 +11,11 @@ class NotificationManager:
         account_sid = os.environ.get('ENV_TWILIO_SID')
         auth_token = os.environ.get('ENV_TWILIO_TOKEN')
         client = Client(account_sid, auth_token)
-
-        message = client.messages.create(
-            from_=os.environ.get('ENV_TWILIO_FROM'),
-            body=message_txt,
-            to=os.environ.get('ENV_TWILIO_TO')
-        )
+        print(message_txt)
+        print("2-make-another-integration")
+        
+        # message = client.messages.create(
+        #     from_=os.environ.get('ENV_TWILIO_FROM'),
+        #     body=message_txt,
+        #     to=os.environ.get('ENV_TWILIO_TO')
+        # )
