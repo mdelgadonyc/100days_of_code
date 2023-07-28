@@ -47,12 +47,12 @@ class DataManager:
             "Authorization": SHEETY_TOKEN
         }
 
-        # response = requests.get(url=SHEETY_ENDPOINT, json=headers)
-        # response.raise_for_status()
-        # data = response.json()
+        response = requests.get(url=SHEETY_ENDPOINT, json=headers)
+        response.raise_for_status()
+        data = response.json()
 
         # hard coded values to reduce API calls while debugging
-        data = {'prices': [{'city': 'Mumbai', 'iataCode': 'BOM', 'lowestPrice': 5, 'id': 2}, {'city': 'Berlin', 'iataCode': 'BER', 'lowestPrice': 2000, 'id': 3}, {'city': 'Beijing', 'iataCode': 'BJS', 'lowestPrice': 485, 'id': 4}, {'city': 'Shanghai', 'iataCode': 'SHA', 'lowestPrice': 551, 'id': 5}, {'city': 'San Francisco', 'iataCode': 'SFO', 'lowestPrice': 95, 'id': 6}, {'city': 'Chicago', 'iataCode': 'CHI', 'lowestPrice': 414, 'id': 7}, {'city': 'Los Angeles', 'iataCode': 'LAX', 'lowestPrice': 240, 'id': 8}]}
+        # data = {'prices': [{'city': 'Mumbai', 'iataCode': 'BOM', 'lowestPrice': 5, 'id': 2}, {'city': 'Berlin', 'iataCode': 'BER', 'lowestPrice': 2000, 'id': 3}, {'city': 'Beijing', 'iataCode': 'BJS', 'lowestPrice': 485, 'id': 4}, {'city': 'Shanghai', 'iataCode': 'SHA', 'lowestPrice': 551, 'id': 5}, {'city': 'San Francisco', 'iataCode': 'SFO', 'lowestPrice': 95, 'id': 6}, {'city': 'Chicago', 'iataCode': 'CHI', 'lowestPrice': 414, 'id': 7}, {'city': 'Los Angeles', 'iataCode': 'LAX', 'lowestPrice': 240, 'id': 8}]}
 
         rows = data['prices']
 
