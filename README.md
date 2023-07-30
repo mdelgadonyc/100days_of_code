@@ -37,3 +37,5 @@ My mini projects for each day:
 * DAY 37 Project: Habitual
 * DAY 38 Project: FitTrack
 * DAY 39 Project: [Capstone] Take Flight!
+* DAY 54 Exercise: Deco-Demo
+* DAY 55 Project: Higher, Lower Game [Web Version]
