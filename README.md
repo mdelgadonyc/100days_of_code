@@ -39,3 +39,4 @@ My mini projects for each day:
 * DAY 39 Project: [Capstone] Take Flight!
 * DAY 54 Exercise: Deco-Demo
 * DAY 55 Project: Higher, Lower Game [Web Version]
+* DAY 56 Project: Serving Face
