@@ -40,3 +40,4 @@ My mini projects for each day:
 * DAY 54 Exercise: Deco-Demo
 * DAY 55 Project: Higher, Lower Game [Web Version]
 * DAY 56 Project: Serving Face
+* DAY 57 Project: [Capstone] Blogging

@@ -42,5 +42,14 @@ def get_age(name):
     return data["age"]
 
 
+@app.route('/blog')
+def blog():
+    url = "https://api.npoint.io/d8332566712a9f862efc"
+    response = requests.get(url)
+    response.raise_for_status()
+    blog_data = response.json()
+    return render_template("blog.html", blogs=blog_data)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
