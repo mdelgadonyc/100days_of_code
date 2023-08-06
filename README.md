@@ -41,3 +41,4 @@ My mini projects for each day:
 * DAY 55 Project: Higher, Lower Game [Web Version]
 * DAY 56 Project: Serving Face
 * DAY 57 Project: [Capstone] Blogging
+* DAY 59+60 Project: Weird Musings [Improved version of the Day 57 "Blogging" Capstone]
