@@ -3,12 +3,13 @@ import os
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired
 import os
 
 
 class LoginForm(FlaskForm):
-    email = StringField(label='Email')
-    password = PasswordField(label='Password')
+    email = StringField(label='Email', validators=[DataRequired()])
+    password = PasswordField(label='Password', validators=[DataRequired()])
     submit = SubmitField(label='Log In')
 
 
@@ -18,10 +19,13 @@ app.secret_key = os.environ["SECRET_KEY"]
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
-    if request.method == 'POST':
-        return "Form submitted"
-
     form = LoginForm()
+
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            return "Form submitted"
+
+    # form.validate_on_submit()
     return render_template('login.html', form=form)
 
 
