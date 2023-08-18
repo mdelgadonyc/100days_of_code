@@ -43,3 +43,4 @@ My mini projects for each day:
 * DAY 57 Project: [Capstone] Blogging
 * DAY 59+60 Project: Weird Musings [Improved version of the Day 57 "Blogging" Capstone]
 * DAY 61 Project: WTForm Signin!
+* DAY 62 Project: Cafe Wifi
