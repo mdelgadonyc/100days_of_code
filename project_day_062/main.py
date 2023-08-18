@@ -1,6 +1,6 @@
 # DAY 62 Project: Cafe Wifi
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, SubmitField
@@ -73,7 +73,7 @@ def add_cafe():
             with open(csv_file_path, mode='a', encoding='utf-8', newline='') as csv_file:
                 csv_writer = csv.writer(csv_file, delimiter=',')
                 csv_writer.writerow(new_cafe)
-            return "Successful POST"
+            return redirect(url_for('cafes'))
 
     return render_template('add.html', form=form)
 
