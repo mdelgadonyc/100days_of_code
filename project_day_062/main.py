@@ -19,7 +19,7 @@ pip3 install -r requirements.txt
 
 This will install the packages from requirements.txt for this project.
 '''
-
+csv_file_path = 'cafe-data.csv'
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 Bootstrap5(app)
@@ -58,18 +58,29 @@ def home():
 def add_cafe():
     form = CafeForm()
     if request.method == 'POST':
+        # Make the form write a new row into cafe-data.csv
+        # if form.validate_on_submit()
         if form.validate_on_submit():
-            print("True")
-            # Exercise:
-            # Make the form write a new row into cafe-data.csv
-            # with   if form.validate_on_submit()
+            cafe = form['cafe'].data
+            location = form['location'].data
+            open_time = form['open_time'].data
+            close_time = form['close_time'].data
+            coffee_rating = form['coffee_rating'].data
+            wifi_rating = form['wifi_rating'].data
+            power_rating = form['power_rating'].data
+            new_cafe = [cafe, location, open_time, close_time, coffee_rating, wifi_rating, power_rating]
+
+            with open(csv_file_path, mode='a', encoding='utf-8', newline='') as csv_file:
+                csv_writer = csv.writer(csv_file, delimiter=',')
+                csv_writer.writerow(new_cafe)
             return "Successful POST"
+
     return render_template('add.html', form=form)
 
 
 @app.route('/cafes')
 def cafes():
-    with open('cafe-data.csv', newline='', encoding='utf-8') as csv_file:
+    with open(csv_file_path, newline='', encoding='utf-8') as csv_file:
         csv_data = csv.reader(csv_file, delimiter=',')
         list_of_rows = []
         for row in csv_data:
