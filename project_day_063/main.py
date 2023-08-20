@@ -1,3 +1,5 @@
+# DAY 63 Project: Virtual Library
+
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
@@ -41,12 +43,27 @@ def add():
     return render_template('add.html')
 
 
-@app.route("/edit/<int:id_num>", methods=["GET"])
+@app.route("/edit/<int:id_num>", methods=["GET", "POST"])
 def edit(id_num):
-    print(f"User requested editing of the rating for book with ID {id_num}")
-    return "UNDER CONSTRUCTION"
+    if request.method == "POST":
+        new_id = request.form["rating"]
+        book = db.get_or_404(Book, id_num)
+        book.rating = new_id
+        db.session.commit()
+        return redirect(url_for('home'))
+
+    # book = db.session.get(Book, id_num)
+    book = db.get_or_404(Book, id_num)
+    return render_template('edit.html', book=book)
+
+
+@app.route("/delete/<int:id_num>", methods=["GET"])
+def delete(id_num):
+    book = db.get_or_404(Book, id_num)
+    db.session.delete(book)
+    db.session.commit()
+    return redirect(url_for('home'))
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-
