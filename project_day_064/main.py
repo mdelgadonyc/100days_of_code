@@ -16,6 +16,12 @@ db = SQLAlchemy()
 db.init_app(app)
 
 
+class RateMovieForm(FlaskForm):
+    rating = StringField('Your Rating Out of 10 e.g. 7.5', validators=[DataRequired()])
+    review = StringField('Your Review', validators=[DataRequired()])
+    submit = SubmitField('Done')
+
+
 # Create Table
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -65,6 +71,38 @@ with app.app_context():
 #     db.session.commit()
 
 
+@app.route("/delete", methods=['GET'])
+def delete():
+    movie_id = request.args.get('id')
+    movie = db.session.execute(db.select(Movie).filter_by(id=movie_id)).scalar()
+
+    if movie:
+        db.session.delete(movie)
+        db.session.commit()
+
+    return redirect(url_for('home'))
+
+
+@app.route("/edit", methods=['GET', 'POST'])
+def edit():
+    movie_id = request.args.get('id')
+    rate_form = RateMovieForm()
+
+    # movie = Movie.query.get(movie_id)
+    movie = db.session.execute(db.select(Movie).filter_by(id=movie_id)).scalar()
+    print(movie)
+    print(movie.title)
+
+    if request.method == 'POST':
+        if rate_form.validate_on_submit():
+            movie.rating = rate_form.rating.data
+            movie.review = rate_form.review.data
+            db.session.commit()
+            return redirect(url_for('home'))
+
+    return render_template('edit.html', form=rate_form, movie_title=movie.title, id=movie_id)
+
+
 @app.route("/")
 def home():
     result = db.session.execute(db.select(Movie).order_by(db.desc(Movie.ranking)))
@@ -73,4 +111,4 @@ def home():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
