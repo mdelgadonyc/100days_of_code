@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
@@ -7,7 +9,7 @@ from wtforms.validators import DataRequired
 import requests
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.environ.get('ENV_SECRET_KEY')
 Bootstrap5(app)
 
 # Create DB
@@ -20,6 +22,11 @@ class RateMovieForm(FlaskForm):
     rating = StringField('Your Rating Out of 10 e.g. 7.5', validators=[DataRequired()])
     review = StringField('Your Review', validators=[DataRequired()])
     submit = SubmitField('Done')
+
+
+class AddMovieForm(FlaskForm):
+    title = StringField('Movie Title', validators=[DataRequired()])
+    submit = SubmitField('Add Movie')
 
 
 # Create Table
@@ -36,6 +43,7 @@ class Movie(db.Model):
 
 with app.app_context():
     db.create_all()
+
 
 # second_movie = Movie(
 #     title="Avatar The Way of Water",
@@ -71,6 +79,39 @@ with app.app_context():
 #     db.session.commit()
 
 
+# We should be able to add any film and use an API to fetch the poster image, year of release and movie description.
+# 1. Make the add page render when you click on the Add Movie button on the Home page. The Add page should render a WTF form that only contains 1 field - the title of the movie.
+
+
+@app.route("/add", methods=['GET', 'POST'])
+def add():
+    add_movie_form = AddMovieForm()
+
+    if add_movie_form.validate_on_submit():
+        movie_title = add_movie_form.title.data
+        url = "https://api.themoviedb.org/3/search/movie"
+        api_key = os.environ.get('ENV_API_KEY')
+
+        params = {
+            "query": f"{movie_title}",
+            "include_adult": "false",
+            "language": "en-US",
+            "page": "1",
+        }
+
+        headers = {
+            "accept": "application/json",
+            "Authorization": f"{api_key}"
+        }
+
+        response = requests.get(url, params=params, headers=headers)
+        data = response.json()
+        movies_list = data['results']
+        return render_template('select.html', movies=movies_list)
+
+    return render_template('add.html', form=add_movie_form)
+
+
 @app.route("/delete", methods=['GET'])
 def delete():
     movie_id = request.args.get('id')
@@ -90,8 +131,6 @@ def edit():
 
     # movie = Movie.query.get(movie_id)
     movie = db.session.execute(db.select(Movie).filter_by(id=movie_id)).scalar()
-    print(movie)
-    print(movie.title)
 
     if request.method == 'POST':
         if rate_form.validate_on_submit():
@@ -111,4 +150,4 @@ def home():
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
