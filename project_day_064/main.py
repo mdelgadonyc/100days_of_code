@@ -35,14 +35,14 @@ class Movie(db.Model):
     title = db.Column(db.String(250), unique=True, nullable=False)
     year = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String(500), nullable=False)
-    rating = db.Column(db.Float, nullable=False)
-    ranking = db.Column(db.Integer, nullable=False)
-    review = db.Column(db.String(250), nullable=False)
+    rating = db.Column(db.Float, nullable=True)
+    ranking = db.Column(db.Integer, nullable=True)
+    review = db.Column(db.String(250), nullable=True)
     img_url = db.Column(db.String(250), nullable=False)
-
-
-with app.app_context():
-    db.create_all()
+#
+#
+# with app.app_context():
+#     db.create_all()
 
 
 # second_movie = Movie(
@@ -79,8 +79,53 @@ with app.app_context():
 #     db.session.commit()
 
 
-# We should be able to add any film and use an API to fetch the poster image, year of release and movie description.
-# 1. Make the add page render when you click on the Add Movie button on the Home page. The Add page should render a WTF form that only contains 1 field - the title of the movie.
+def search_titles(movie_title):
+    url = "https://api.themoviedb.org/3/search/movie"
+    api_key = os.environ.get('ENV_API_KEY')
+
+    params = {
+        "query": f"{movie_title}",
+        "include_adult": "false",
+        "language": "en-US",
+        "page": "1",
+    }
+
+    headers = {
+        "accept": "application/json",
+        "Authorization": f"{api_key}"
+    }
+    return requests.get(url, params=params, headers=headers)
+
+
+@app.route("/choose")
+def choose():
+    movie_id = request.args.get('id')
+    url = f"https://api.themoviedb.org/3/movie/{movie_id}"
+    api_key = os.environ.get('ENV_API_KEY')
+
+
+    params = {
+        "language": "en-US"
+    }
+
+    headers = {
+        "accept": "application/json",
+        "Authorization": f"{api_key}"
+    }
+
+    response = requests.get(url, headers=headers)
+    data = response.json()
+
+    new_movie = Movie()
+    new_movie.title = data['title']
+    new_movie.img_url = f'https://image.tmdb.org/t/p/original/{data["poster_path"]}'
+    new_movie.year = data['release_date'].split('-')[0]
+    new_movie.description = data['overview']
+
+    db.session.add(new_movie)
+    db.session.commit()
+
+    return redirect(url_for('edit'))
 
 
 @app.route("/add", methods=['GET', 'POST'])
@@ -89,22 +134,8 @@ def add():
 
     if add_movie_form.validate_on_submit():
         movie_title = add_movie_form.title.data
-        url = "https://api.themoviedb.org/3/search/movie"
-        api_key = os.environ.get('ENV_API_KEY')
-
-        params = {
-            "query": f"{movie_title}",
-            "include_adult": "false",
-            "language": "en-US",
-            "page": "1",
-        }
-
-        headers = {
-            "accept": "application/json",
-            "Authorization": f"{api_key}"
-        }
-
-        response = requests.get(url, params=params, headers=headers)
+        
+        response = search_titles(movie_title)
         data = response.json()
         movies_list = data['results']
         return render_template('select.html', movies=movies_list)
