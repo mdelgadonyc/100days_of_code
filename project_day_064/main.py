@@ -59,7 +59,9 @@ def search_titles(movie_title):
         "accept": "application/json",
         "Authorization": f"{api_key}"
     }
-    return requests.get(url, params=params, headers=headers)
+    response = requests.get(url, params=params, headers=headers)
+    response.raise_for_status()
+    return response
 
 
 @app.route("/choose")
@@ -78,6 +80,7 @@ def choose():
     }
 
     response = requests.get(url, headers=headers)
+    response.raise_for_status()
     data = response.json()
 
     new_movie = Movie()
