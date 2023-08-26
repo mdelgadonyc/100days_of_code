@@ -1,5 +1,3 @@
-import os
-
 from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
@@ -7,6 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 import requests
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('ENV_SECRET_KEY')
@@ -103,7 +102,6 @@ def choose():
     url = f"https://api.themoviedb.org/3/movie/{movie_id}"
     api_key = os.environ.get('ENV_API_KEY')
 
-
     params = {
         "language": "en-US"
     }
@@ -125,7 +123,7 @@ def choose():
     db.session.add(new_movie)
     db.session.commit()
 
-    return redirect(url_for('edit'))
+    return redirect(url_for('edit', id=new_movie.id))
 
 
 @app.route("/add", methods=['GET', 'POST'])
