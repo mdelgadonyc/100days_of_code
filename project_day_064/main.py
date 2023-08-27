@@ -155,7 +155,7 @@ def add_ranking(results):
 
 @app.route("/")
 def home():
-    results = db.session.execute(db.select(Movie).order_by(db.desc(Movie.rating)))
+    results = db.session.execute(db.select(Movie).order_by(Movie.rating))
 
     movies = add_ranking(results)
 
