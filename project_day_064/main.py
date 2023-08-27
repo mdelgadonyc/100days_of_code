@@ -1,3 +1,5 @@
+# DAY 64 Project: Top Ten Movie Countdown
+
 from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
@@ -140,10 +142,23 @@ def edit():
     return render_template('edit.html', form=rate_form, movie_title=movie.title, id=movie_id)
 
 
+def add_ranking(results):
+    movies = [result for result in results.scalars()]
+    count = len(movies)
+
+    for movie in movies:
+        movie.ranking = count
+        count -= 1
+
+    return movies
+
+
 @app.route("/")
 def home():
-    result = db.session.execute(db.select(Movie).order_by(db.desc(Movie.ranking)))
-    movies = result.scalars()
+    results = db.session.execute(db.select(Movie).order_by(db.desc(Movie.rating)))
+
+    movies = add_ranking(results)
+
     return render_template("index.html", movies=movies)
 
 
