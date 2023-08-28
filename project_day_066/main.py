@@ -41,6 +41,13 @@ def random_cafe():
     return jsonify(cafe=cafe.to_dict())
 
 
+@app.route("/all")
+def all_cafes():
+    all_cafes = db.session.query(Cafe).all()
+
+    return jsonify(cafes=[cafe.to_dict() for cafe in all_cafes])
+
+
 @app.route("/")
 def home():
     return render_template("index.html")
