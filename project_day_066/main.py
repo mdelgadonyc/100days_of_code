@@ -33,6 +33,17 @@ with app.app_context():
     db.create_all()
 
 
+@app.route("/search")
+def cafe_search():
+    location = request.args.get('loc')
+    test_location = "Peckham"
+    search_results = db.session.query(Cafe).filter(Cafe.location == location).all()
+    if len(search_results) == 0:
+        return jsonify(error={"Not Found": "Sorry, we don't have a cafe at that location."}), 404
+    else:
+        return jsonify(cafes=[cafe.to_dict() for cafe in search_results])
+
+
 @app.route("/random")
 def random_cafe():
     all_cafes = db.session.query(Cafe).all()
