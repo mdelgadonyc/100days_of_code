@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, make_response
 from flask_sqlalchemy import SQLAlchemy
 import random
 
@@ -33,6 +33,7 @@ with app.app_context():
     db.create_all()
 
 
+## HTTP GET - Read Record
 @app.route("/search")
 def cafe_search():
     location = request.args.get('loc')
@@ -58,7 +59,14 @@ def all_cafes():
 
     return jsonify(cafes=[cafe.to_dict() for cafe in all_cafes])
 
+@app.route("/cafes/<cafe_id>")
+def get_single_cafe(cafe_id):
+    cafe = db.session.get(Cafe,cafe_id)
 
+    return jsonify(cafe.to_dict())
+
+
+## HTTP POST - Create Record
 @app.route("/add", methods=["POST"])
 def add_cafe():
     message = {"success": "Successfully added the new cafe."}
@@ -82,10 +90,37 @@ def add_cafe():
         print(e)
         db.session.rollback()
         message = {"error": "Encountered error processing request."}
+
     finally:
         db.session.close()
 
     return jsonify(response=message)
+
+## HTTP PUT/PATCH - Update Record
+@app.route("/update-price/<cafe_id>", methods=["PATCH"])
+def update_price(cafe_id):
+    new_price = request.args.get("new_price")
+    print(new_price)
+
+    # add new cafe to the open database session
+    try:
+        cafe = db.session.get(Cafe, cafe_id)
+        cafe.coffee_price = new_price
+        db.session.commit()
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        message = {"error": e }
+
+    finally:
+        db.session.close()
+
+
+
+    return new_price
+
+
+## HTTP DELETE - Delete Record
 
 
 @app.route("/")
@@ -93,13 +128,11 @@ def home():
     return render_template("index.html")
 
 
-## HTTP GET - Read Record
 
-## HTTP POST - Create Record
 
-## HTTP PUT/PATCH - Update Record
 
-## HTTP DELETE - Delete Record
+
+
 
 
 if __name__ == '__main__':
