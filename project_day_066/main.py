@@ -1,6 +1,9 @@
 from flask import Flask, jsonify, render_template, request, make_response
 from flask_sqlalchemy import SQLAlchemy
+import os
 import random
+
+api_key = os.environ.get(API_KEY)
 
 app = Flask(__name__)
 
@@ -121,7 +124,26 @@ def update_price(cafe_id):
 
 
 ## HTTP DELETE - Delete Record
+@app.route("/cafe-closed/<cafe_id>", methods=["DELETE"])
+def cafe_delete(cafe_id):
+    message = f"Successfully deleted cafe_id {cafe_id}"
+    user_key = request.headers["api-key"]
+    print(user_key)
+    if user_key is not api_key:
+        return "Invalid API key"
 
+    try:
+        cafe = db.session.get(Cafe, cafe_id)
+        db.session.delete(cafe)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        message = {"error": e}
+
+    finally:
+        db.session.close()
+
+    return message
 
 @app.route("/")
 def home():
