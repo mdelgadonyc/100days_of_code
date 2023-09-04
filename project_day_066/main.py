@@ -59,6 +59,35 @@ def all_cafes():
     return jsonify(cafes=[cafe.to_dict() for cafe in all_cafes])
 
 
+@app.route("/add", methods=["POST"])
+def add_cafe():
+    message = {"success": "Successfully added the new cafe."}
+    new_cafe = Cafe(
+        name=request.form.get("name"),
+        map_url=request.form.get("map_url"),
+        img_url=request.form.get("img_url"),
+        location=request.form.get("loc"),
+        has_sockets=bool(request.form.get("sockets")),
+        has_toilet=bool(request.form.get("toilet")),
+        has_wifi=bool(request.form.get("wifi")),
+        can_take_calls=bool(request.form.get("calls")),
+        seats=request.form.get("seats"),
+        coffee_price=request.form.get("coffee_price"),
+    )
+    # add new cafe to the open database session
+    db.session.add(new_cafe)
+    try:
+        db.session.commit()
+    except Exception as e:
+        print(e)
+        db.session.rollback()
+        message = {"error": "Encountered error processing request."}
+    finally:
+        db.session.close()
+
+    return jsonify(response=message)
+
+
 @app.route("/")
 def home():
     return render_template("index.html")
