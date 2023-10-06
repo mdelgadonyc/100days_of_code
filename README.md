@@ -1,7 +1,9 @@
-# 100days_of_code
-100 Days of Code: The Complete Python Pro Bootcamp for 2023 (Udemy course by Angela Yu
-- "Master Python by building 100 projects in 100 days. Learn data science, automation, build websites, games and apps!"
+# 100 Days of Python Code
+100 Days of Code: The Complete Python Pro Bootcamp for 2023 (Udemy course by Angela Yu)  
+- "Master Python by building 100 projects in 100 days. Learn data science, automation, build websites, games and apps!"  
 https://www.udemy.com/course/100-days-of-code
+
+![image](https://github.com/mdelgadonyc/100days_of_code/assets/17136771/ec80918c-ef4f-4904-b79d-e7c233739ef7)
 
 My mini projects for each day:
 
