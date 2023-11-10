@@ -48,3 +48,4 @@ My mini projects for each day:
 * DAY 62 Project: Cafe Wifi
 * DAY 63 Project: Virtual Library
 * DAY 64 Project: Top Ten Movie Countdown
+* DAY 82 Project: Morse Code
